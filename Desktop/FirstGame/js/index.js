@@ -10,7 +10,7 @@ $(document).ready(function () {
     var x=-1;
     var Score= 0;
     var scoreR=[];
-    var myinterval=null;
+    var myinterval=null,speedInterval=null;
 
     var moveObjectvar=false;
 
@@ -78,9 +78,9 @@ $(document).ready(function () {
         return false;
     }
     function animateBackground(){
-        //var s= x+"px 0";
-        //$("#background").css("background-position",s);
-        //x-=1;
+        var s= x+"px 0";
+        $("#background").css("background-position",s);
+        x-=1;
         if(moveObjectvar){
             marginTop-=speed;
             var s= marginTop+percent;
@@ -179,6 +179,7 @@ $(document).ready(function () {
             //console.log(marginTop)
         }
         else if(marginTop<-3){
+            document.getElementById('audiotag2').play();
             $("#background div#bird").css("background-image","url('resource/bird4.gif')");
             moveCloudVar=false;
             moveObjectvar=false;
@@ -192,6 +193,7 @@ $(document).ready(function () {
             resetgvalue();
             resetvalue();
             clearInterval(myinterval);
+            clearInterval(speedInterval);
             myinterval=null;
             cloudSpeed=0.1;
             moveObjectvar=false;
@@ -224,6 +226,7 @@ $(document).ready(function () {
             //resetCloud();
             //document.getElementById("start").innerHTML = "Start";
             myinterval = setInterval(animateBackground, 10);
+            speedInterval= setInterval(function(){cloudSpeed += 0.01;},2000)
         }
         else if(moveCloudVar){
             //document.getElementById("start").innerHTML = "Pause";
