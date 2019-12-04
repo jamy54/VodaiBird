@@ -4,18 +4,19 @@
 // here 1 percent left equal to nine pixel
 
 	function FetchScore() {
-		var dummyData = [{name: 'jamy', score: 20, time: "1 jan 2016"},{name: 'sadun', score: 10, time: "1 jan 2016"},{name: 'dipu', score: 50, time: "1 jan 2016"}]
+		//var dummyData = [{name: 'jamy', score: 20, time: "1 jan 2016"},{name: 'sadun', score: 10, time: "1 jan 2016"},{name: 'dipu', score: 50, time: "1 jan 2016"}]
 		var dummyHtml = "<table>";
-		fetch('http://dummy.restapiexample.com/api/v1/employees',{ mode: 'no-cors' }) // Call the fetch function passing the url of the API as a parameter
-		.then(function(d) {
-			for(var i=0;i<dummyData.length; i++)
+		fetch("http://127.0.0.1:5000/getscore") // Call the fetch function passing the url of the API as a parameter
+		.then((resp) => resp.json())
+		.then(function(data) {
+			for(var i=0;i<data.length; i++)
 			{
-				dummyHtml += "<tr><td><b>Name: </b>"+dummyData[i].name+ "</td><td><b>Score: </b>"+dummyData[i].score+ "</td><td><b>Time: </b>" +dummyData[i].time +"</td></tr>"
+				dummyHtml += "<tr><td><b>Name: </b>"+data[i].name+ "</td><td><b>Score: </b>"+data[i].score+ "</td><td><b>Time: </b>" +data[i].time +"</td></tr>"
 			}
 			dummyHtml += "</table>";
 			document.getElementById("scoreContent").innerHTML = dummyHtml;
 		})
-		.catch(function() {
+		.catch(function(msg) {
 			// This is where you run code if the server returns any errors
 		});
 	}
