@@ -41,15 +41,16 @@
 	  return await response.json(); // parses JSON response into native JavaScript objects
 	}
 	
-	async function SaveScore()
+	function SaveScore()
 	{
-		var demodata = {Name: window.Name, Score: 1}
-		try {
-		  const data = await postData('http://dummy.restapiexample.com/api/v1/create', demodata);
-		  console.log(JSON.stringify(data)); // JSON-string from `response.json()` call
-		} catch (error) {
-		  console.error(error);
-		}
+		fetch("http://127.0.0.1:5000/savescore?name="+window.Name+"&score="+window.score) // Call the fetch function passing the url of the API as a parameter
+		.then((resp) => resp.json())
+		.then(function(data) {
+			
+		})
+		.catch(function(msg) {
+			// This is where you run code if the server returns any errors
+		});
 	}
 
 	function ShowHighScoreModal()
@@ -269,6 +270,7 @@ $(document).ready(function () {
             myinterval=null;
             cloudSpeed=0.1;
             moveObjectvar=false;
+			window.score = Score;
 			SaveScore();
         }
     }
