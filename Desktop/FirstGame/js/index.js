@@ -9,7 +9,7 @@
 		fetch("http://127.0.0.1:5000/getscore") // Call the fetch function passing the url of the API as a parameter
 		.then((resp) => resp.json())
 		.then(function(data) {
-			for(var i=0;i<data.length; i++)
+			for(var i=data.length-1;i>=0; i--)
 			{
 				dummyHtml += "<tr><td><b>Name: </b>"+data[i].name+ "</td><td><b>Score: </b>"+data[i].score+ "</td><td><b>Time: </b>" +data[i].time +"</td></tr>"
 			}
