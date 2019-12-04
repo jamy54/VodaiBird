@@ -65,7 +65,7 @@
 	
 	function GetName() {
 	  var person = prompt("Please enter your name", "Harry Potter");
-	  if (person == null || person == "") {
+	  if (person == null || person.trim() == "") {
 		GetName();
 	  }
 	  else window.Name = person;
