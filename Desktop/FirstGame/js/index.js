@@ -3,10 +3,77 @@
  */
 // here 1 percent left equal to nine pixel
 
+	function FetchScore() {
+		var dummyData = [{name: 'jamy', score: 20, time: "1 jan 2016"},{name: 'sadun', score: 10, time: "1 jan 2016"},{name: 'dipu', score: 50, time: "1 jan 2016"}]
+		var dummyHtml = "<table>";
+		fetch('http://dummy.restapiexample.com/api/v1/employees',{ mode: 'no-cors' }) // Call the fetch function passing the url of the API as a parameter
+		.then(function(d) {
+			for(var i=0;i<dummyData.length; i++)
+			{
+				dummyHtml += "<tr><td><b>Name: </b>"+dummyData[i].name+ "</td><td><b>Score: </b>"+dummyData[i].score+ "</td><td><b>Time: </b>" +dummyData[i].time +"</td></tr>"
+			}
+			dummyHtml += "</table>";
+			document.getElementById("scoreContent").innerHTML = dummyHtml;
+		})
+		.catch(function() {
+			// This is where you run code if the server returns any errors
+		});
+	}
+	
+
+	
+	async function postData(url = '', data = {}) {
+	  // Default options are marked with *
+	  const response = await fetch(url, {
+		method: 'POST', // *GET, POST, PUT, DELETE, etc.
+		mode: 'cors', // no-cors, *cors, same-origin
+		cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+		credentials: 'same-origin', // include, *same-origin, omit
+		headers: {
+		  'Content-Type': 'application/json'
+		  // 'Content-Type': 'application/x-www-form-urlencoded',
+		},
+		redirect: 'follow', // manual, *follow, error
+		referrer: 'no-referrer', // no-referrer, *client
+		body: JSON.stringify(data) // body data type must match "Content-Type" header
+	  },{ mode: 'no-cors' });
+	  return await response.json(); // parses JSON response into native JavaScript objects
+	}
+	
+	async function SaveScore()
+	{
+		var demodata = {Name: window.Name, Score: 1}
+		try {
+		  const data = await postData('http://dummy.restapiexample.com/api/v1/create', demodata);
+		  console.log(JSON.stringify(data)); // JSON-string from `response.json()` call
+		} catch (error) {
+		  console.error(error);
+		}
+	}
+
+	function ShowHighScoreModal()
+	{
+		if(window.HasGameStart != 1)
+		{
+			$("#myModal").toggle();
+			$("#background").toggle();
+			FetchScore();
+		}
+	}
+	
+	function GetName() {
+	  var person = prompt("Please enter your name", "Harry Potter");
+	  if (person == null || person == "") {
+		GetName();
+	  }
+	  else window.Name = person;
+	}
+
 $(document).ready(function () {
     //alert('hellow')
     //$("#background div#bird").css({'background-image': 'url(resource/bird.png)'});
-    document.getElementById("welcomeMessage").innerHTML="Click here to Start Game";
+	GetName();
+    document.getElementById("welcomeMessage").innerHTML="Click here to Start " + window.Name;
     var x=-1;
     var Score= 0;
     var scoreR=[];
@@ -44,6 +111,9 @@ $(document).ready(function () {
     $("#cloud3").css("margin-left",cloudmarginleft3+"%");
 
     window.reload= function (){window.location.reload();}
+
+
+
 
     function detectCollision(){
         var birdPosition = $('#bird').offset();
@@ -187,8 +257,9 @@ $(document).ready(function () {
         }
         else{
             //marginTop=25;
+			window.HasGameStart = 0;
             document.getElementById('audiotag1').pause();
-            document.getElementById("welcomeMessage").innerHTML="Game Over<br> Your Score is:"+Score+" <a onclick='reload();return false;'>play again?</a>";
+            document.getElementById("welcomeMessage").innerHTML="Game Over "+window.Name+"<br> Your Score is:"+Score+" <a onclick='reload();return false;'>play again?</a>";
             $("#background div#bird").css("background-image","url('resource/bird4.gif')");
             resetgvalue();
             resetvalue();
@@ -197,6 +268,7 @@ $(document).ready(function () {
             myinterval=null;
             cloudSpeed=0.1;
             moveObjectvar=false;
+			SaveScore();
         }
     }
 
@@ -221,6 +293,8 @@ $(document).ready(function () {
 */
 
     $("#background").click(function() {
+		//FetchScore();
+		window.HasGameStart = 1;
         document.getElementById("welcomeMessage").innerHTML="";
         if(!myinterval) {
             //resetCloud();

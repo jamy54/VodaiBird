@@ -13,14 +13,30 @@
     <script type="text/javascript" src="js/jquery.js"></script>
     <script type="text/javascript" src="js/index.js"></script>
 </head>
-
+<style>
+.modal-content
+{
+	width: 800px;
+	height: 500px;
+	border: 1px solid black;
+}
+</style>
 
 <body>
 <div>
 
+
     <ul>
-        <li id="start">Start</li>
+        <li id="start">Start</li> <button onclick="ShowHighScoreModal();">High score</button>
     </ul>
+	
+	<div id="myModal" class="modal" style="display: none;">
+	  <!-- Modal content -->
+	  <div class="modal-content">
+		<div class="close" style="text-align: left; font-size: 40px;" onclick="ShowHighScoreModal();">&times;</div>
+		<div id="scoreContent" style="margin-left: 30px;">Some text in the Modal..</div>
+	  </div>
+	</div>
 
     <div id="background">
         <div id="Score" style="margin-left: 5%; color: brown; font-size: 30px;"><b>0</b></div>
