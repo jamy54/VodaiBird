@@ -47,7 +47,7 @@ def savescore():
         datastore = json.load(f)
     for d in datastore:
         if(d['name'] == name):
-            if (d['score'] < score):
+            if (int(d['score']) < int(score)):
                 d['score'] = score
                 d['time'] = str(today)
             modified = True
