@@ -6,7 +6,7 @@
 	function FetchScore() {
 		//var dummyData = [{name: 'jamy', score: 20, time: "1 jan 2016"},{name: 'sadun', score: 10, time: "1 jan 2016"},{name: 'dipu', score: 50, time: "1 jan 2016"}]
 		var dummyHtml = "<table>";
-		fetch("http://127.0.0.1:5000/getscore") // Call the fetch function passing the url of the API as a parameter
+		fetch("http://192.168.1.10:8080/getscore") // Call the fetch function passing the url of the API as a parameter
 		.then((resp) => resp.json())
 		.then(function(data) {
 			for(var i=data.length-1;i>=0; i--)
@@ -43,7 +43,7 @@
 	
 	function SaveScore()
 	{
-		fetch("http://127.0.0.1:5000/savescore?name="+window.Name+"&score="+window.score) // Call the fetch function passing the url of the API as a parameter
+		fetch("http://192.168.1.10:8080/savescore?name="+window.Name+"&score="+window.score) // Call the fetch function passing the url of the API as a parameter
 		.then((resp) => resp.json())
 		.then(function(data) {
 			
